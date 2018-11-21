@@ -1,15 +1,13 @@
 package org.expensesplanner.expenses;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class ExpenseDto {
+public class ExpenseEntity {
+
+    private Long id;
     private String name;
     private Category category;
     private Double price;
