@@ -2,8 +2,6 @@ package org.expensesplanner.expenses;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 import static java.util.Objects.isNull;
 
 @Service

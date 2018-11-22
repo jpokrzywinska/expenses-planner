@@ -4,43 +4,48 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.util.Collection;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class ExpensesServiceTest {
 
     private ExpensesService sut;
-    private ExpensesRepository expensesRepo;
-
+    private ExpensesRepository expensesRepository;
 
     @Before
-    public void setUp(){
-        sut = new ExpensesService(new ExpenseValidator());
+    public void setUp() {
+        expensesRepository = new InMemoryExpensesRepository();
+
+        sut = new ExpensesService(new ExpenseValidator(), expensesRepository, new ExpensesMapper());
     }
 
     @Test
-    public void addExpense(){
+    public void addExpense() {
         //given
-        ExpenseDto expenseDto = new ExpenseDto();
-        ArgumentCaptor<ExpenseEntity> entityCaptor = ArgumentCaptor.forClass(ExpenseEntity.class);
+        ExpenseDto expenseDto = ExpensesData.createDummyExpenseDto();
 
         //when
         sut.add(expenseDto);
 
         //then
-        verify(expensesRepo).add(entityCaptor.capture());
-        ExpenseEntity result = entityCaptor.getValue();
-        assertThat(result.getName()).isEqualTo(expenseDto.getName());
-        assertThat(result.getPrice()).isEqualTo(expenseDto.getPrice());
-        assertThat(result.getDate()).isEqualTo(expenseDto.getDate());
-        assertThat(result.getPerson()).isEqualTo(expenseDto.getPerson());
-        assertThat(result.getCategory().getName()).isEqualTo(expenseDto.getCategory().getName());
+        List<ExpenseEntity> results = expensesRepository.findAll();
+        assertFalse(results.isEmpty());
+        assertThat(results.size()).isEqualTo(1);
+        assertThat(results.get(0).getName()).isEqualTo(expenseDto.getName());
+        assertThat(results.get(0).getPrice()).isEqualTo(expenseDto.getPrice());
+        assertThat(results.get(0).getDate()).isEqualTo(expenseDto.getDate());
+        assertThat(results.get(0).getPerson()).isEqualTo(expenseDto.getPerson());
+        assertThat(results.get(0).getCategory()).isEqualTo(expenseDto.getCategory());
 
     }
 
     @Test(expected = InvalidExpenseException.class)
-    public void shouldThrowExceptionOnValidationErrorWhenNameIsEmpty(){
+    public void shouldThrowExceptionOnValidationErrorWhenNameIsEmpty() {
         //given
         ExpenseDto expenseDto = new ExpenseDto();
         expenseDto.setName(" ");
@@ -50,7 +55,7 @@ public class ExpensesServiceTest {
     }
 
     @Test(expected = InvalidExpenseException.class)
-    public void shouldThrowExceptionOnValidationErrorWhenPriceIsEmpty(){
+    public void shouldThrowExceptionOnValidationErrorWhenPriceIsEmpty() {
         //given
         ExpenseDto expenseDto = new ExpenseDto();
         expenseDto.setPrice(null);

@@ -9,7 +9,7 @@ public class ExpenseEntity {
 
     private Long id;
     private String name;
-    private Category category;
+    private String category;
     private Double price;
     private String person;
     private LocalDateTime date;
