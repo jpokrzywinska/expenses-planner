@@ -6,5 +6,5 @@ public interface ExpensesRepository {
 
     void add(ExpenseEntity expenseEntity);
 
-    List<ExpenseEntity> findAll();
+    List<ExpenseEntity> getExpenses();
 }

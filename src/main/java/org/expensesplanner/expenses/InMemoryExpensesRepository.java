@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryExpensesRepository implements ExpensesRepository{
@@ -20,7 +21,8 @@ public class InMemoryExpensesRepository implements ExpensesRepository{
     }
 
     @Override
-    public List<ExpenseEntity> findAll() {
+    public List<ExpenseEntity> getExpenses() {
         return new ArrayList<>(expenses.values());
     }
+
 }

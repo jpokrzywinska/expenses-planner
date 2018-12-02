@@ -2,6 +2,8 @@ package org.expensesplanner.expenses;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ExpensesService {
 
@@ -21,5 +23,11 @@ public class ExpensesService {
         expenseValidator.validate(expenseDto);
         ExpenseEntity expenseEntity = expensesMapper.map(expenseDto);
         expensesRepository.add(expenseEntity);
+    }
+
+    public List<ExpenseDto> getExpenses() {
+        List<ExpenseEntity> expenseEntities = expensesRepository.getExpenses();
+        List<ExpenseDto> expenseDtos = expensesMapper.mapList(expenseEntities);
+        return  expenseDtos;
     }
 }

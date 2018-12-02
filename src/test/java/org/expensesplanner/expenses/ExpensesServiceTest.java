@@ -33,7 +33,7 @@ public class ExpensesServiceTest {
         sut.add(expenseDto);
 
         //then
-        List<ExpenseEntity> results = expensesRepository.findAll();
+        List<ExpenseEntity> results = expensesRepository.getExpenses();
         assertFalse(results.isEmpty());
         assertThat(results.size()).isEqualTo(1);
         assertThat(results.get(0).getName()).isEqualTo(expenseDto.getName());
@@ -41,6 +41,18 @@ public class ExpensesServiceTest {
         assertThat(results.get(0).getDate()).isEqualTo(expenseDto.getDate());
         assertThat(results.get(0).getPerson()).isEqualTo(expenseDto.getPerson());
         assertThat(results.get(0).getCategory()).isEqualTo(expenseDto.getCategory());
+
+    }
+
+    @Test
+    public void getAllExpenses(){
+        //given
+
+        //when
+        List<ExpenseDto> result = sut.getExpenses();
+
+        //then
+        assertThat(result).hasSize(1);
 
     }
 
