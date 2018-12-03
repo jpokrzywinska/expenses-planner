@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 
@@ -60,26 +61,31 @@ public class ExpensesServiceTest {
     }
 
     @Test
-    public void getAllExpenses() {
+    public void getAllExpensesShouldReturn() {
         //given
+        ExpenseDto expenseDto = ExpensesData.createDummyExpenseDto();
+        sut.add(expenseDto);
 
         //when
         List<ExpenseDto> result = sut.getExpenses();
 
         //then
-        assertThat(result).hasSize(1);
         assertThat(result.size()).isEqualTo(1);
 
     }
 
     @Test
-    public void updateExpense() {
+    public void shouldUpdateExpenseWithNewName() {
         //given
-        ExpenseDto expenseDto = new ExpenseDto();
-
+        ExpenseDto expenseDto = ExpensesData.createDummyExpenseDto();
+        expenseDto.setPerson("Justyna");
+        sut.add(expenseDto);
+        expenseDto.setPerson("Patryk");
         //when
         sut.updateExpense(expenseDto);
 
         //then
+        String updatedName = sut.getExpenses().get(0).getPerson();
+        assertThat(updatedName).isEqualTo("Patryk");
     }
 }

@@ -31,12 +31,7 @@ public class InMemoryExpensesRepository implements ExpensesRepository{
 
     @Override
     public void update(ExpenseEntity expenseEntity) {
-        ExpenseEntity expense = expenses.get(expenseEntity.getId());
-        expense.setName(expenseEntity.getName());
-        expense.setPerson(expenseEntity.getPerson());
-        expense.setDate(expenseEntity.getDate());
-        expense.setPrice(expenseEntity.getPrice());
-        expense.setCategory(expenseEntity.getCategory());
+        expenses.put(expenseEntity.getId(), expenseEntity);
     }
 
 }

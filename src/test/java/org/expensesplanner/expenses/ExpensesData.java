@@ -6,6 +6,7 @@ public class ExpensesData {
 
     public static ExpenseDto createDummyExpenseDto() {
         return ExpenseDto.builder()
+                .id(1L)
                 .name("Pizza")
                 .price(40.50)
                 .category("Jedzenie")

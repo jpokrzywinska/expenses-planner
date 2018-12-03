@@ -32,7 +32,12 @@ public class ExpensesService {
 
     public void updateExpense(ExpenseDto expenseDto) {
         expenseValidator.validate(expenseDto);
-        ExpenseEntity expenseEntity = expensesRepository.findById(expenseDto.getId());
-        expensesRepository.update(expenseEntity);
+        ExpenseEntity expense = expensesRepository.findById(expenseDto.getId());
+        expense.setName(expenseDto.getName());
+        expense.setPerson(expenseDto.getPerson());
+        expense.setDate(expenseDto.getDate());
+        expense.setPrice(expenseDto.getPrice());
+        expense.setCategory(expenseDto.getCategory());
+        expensesRepository.update(expense);
     }
 }
