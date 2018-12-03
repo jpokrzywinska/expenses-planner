@@ -27,7 +27,12 @@ public class ExpensesService {
 
     public List<ExpenseDto> getExpenses() {
         List<ExpenseEntity> expenseEntities = expensesRepository.getExpenses();
-        List<ExpenseDto> expenseDtos = expensesMapper.mapList(expenseEntities);
-        return  expenseDtos;
+        return expensesMapper.mapList(expenseEntities);
+    }
+
+    public void updateExpense(ExpenseDto expenseDto) {
+        expenseValidator.validate(expenseDto);
+        ExpenseEntity expenseEntity = expensesRepository.findById(expenseDto.getId());
+        expensesRepository.update(expenseEntity);
     }
 }

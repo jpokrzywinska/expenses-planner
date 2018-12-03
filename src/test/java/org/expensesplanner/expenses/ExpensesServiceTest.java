@@ -2,15 +2,11 @@ package org.expensesplanner.expenses;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 
-import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 public class ExpensesServiceTest {
 
@@ -41,19 +37,6 @@ public class ExpensesServiceTest {
         assertThat(results.get(0).getDate()).isEqualTo(expenseDto.getDate());
         assertThat(results.get(0).getPerson()).isEqualTo(expenseDto.getPerson());
         assertThat(results.get(0).getCategory()).isEqualTo(expenseDto.getCategory());
-
-    }
-
-    @Test
-    public void getAllExpenses(){
-        //given
-
-        //when
-        List<ExpenseDto> result = sut.getExpenses();
-
-        //then
-        assertThat(result).hasSize(1);
-
     }
 
     @Test(expected = InvalidExpenseException.class)
@@ -74,5 +57,29 @@ public class ExpensesServiceTest {
 
         //when
         sut.add(expenseDto);
+    }
+
+    @Test
+    public void getAllExpenses() {
+        //given
+
+        //when
+        List<ExpenseDto> result = sut.getExpenses();
+
+        //then
+        assertThat(result).hasSize(1);
+        assertThat(result.size()).isEqualTo(1);
+
+    }
+
+    @Test
+    public void updateExpense() {
+        //given
+        ExpenseDto expenseDto = new ExpenseDto();
+
+        //when
+        sut.updateExpense(expenseDto);
+
+        //then
     }
 }
