@@ -11,4 +11,6 @@ public interface ExpensesRepository {
     ExpenseEntity findById(Long id);
 
     void update(ExpenseEntity expenseEntity);
+
+    void delete(Long id);
 }

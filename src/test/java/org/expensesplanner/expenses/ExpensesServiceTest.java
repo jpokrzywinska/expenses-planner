@@ -88,4 +88,18 @@ public class ExpensesServiceTest {
         String updatedName = sut.getExpenses().get(0).getPerson();
         assertThat(updatedName).isEqualTo("Patryk");
     }
+
+    @Test
+    public void shouldDeleteExpense(){
+        //given
+        ExpenseDto expenseDto = ExpensesData.createDummyExpenseDto();
+        sut.add(expenseDto);
+
+        //when
+        sut.deleteExpense(expenseDto);
+
+        //then
+        assertThat(sut.getExpenses().size()).isEqualTo(0);
+
+    }
 }

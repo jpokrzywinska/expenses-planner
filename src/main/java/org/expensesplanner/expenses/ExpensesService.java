@@ -40,4 +40,8 @@ public class ExpensesService {
         expense.setCategory(expenseDto.getCategory());
         expensesRepository.update(expense);
     }
+
+    public void deleteExpense(ExpenseDto expenseDto) {
+        expensesRepository.delete(expenseDto.getId());
+    }
 }

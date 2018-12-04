@@ -34,4 +34,9 @@ public class InMemoryExpensesRepository implements ExpensesRepository{
         expenses.put(expenseEntity.getId(), expenseEntity);
     }
 
+    @Override
+    public void delete(Long id) {
+        expenses.remove(id);
+    }
+
 }
