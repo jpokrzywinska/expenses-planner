@@ -1,30 +1,42 @@
 package org.expensesplanner.expenses;
 
+import org.expensesplanner.category.CategoryEntity;
+import org.expensesplanner.category.CategoryRepository;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ExpensesServiceTest {
 
     private ExpensesService sut;
     private ExpensesRepository expensesRepository;
+    private CategoryRepository categoryRepository;
 
     @Before
     public void setUp() {
+        initMocks(this);
         expensesRepository = new InMemoryExpensesRepository();
-
-        sut = new ExpensesService(new ExpenseValidator(), expensesRepository, new ExpensesMapper());
+        categoryRepository = mock(CategoryRepository.class);
+        sut = new ExpensesService(new ExpenseValidator(), expensesRepository, new ExpensesMapper(categoryRepository));
     }
 
     @Test
     public void addExpense() {
         //given
         ExpenseDto expenseDto = ExpensesData.createDummyExpenseDto();
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setId(1L);
+
+        when(categoryRepository.findById(anyLong())).thenReturn(categoryEntity);
+
 
         //when
         sut.add(expenseDto);
@@ -37,7 +49,7 @@ public class ExpensesServiceTest {
         assertThat(results.get(0).getPrice()).isEqualTo(expenseDto.getPrice());
         assertThat(results.get(0).getDate()).isEqualTo(expenseDto.getDate());
         assertThat(results.get(0).getPerson()).isEqualTo(expenseDto.getPerson());
-        assertThat(results.get(0).getCategory()).isEqualTo(expenseDto.getCategory());
+        assertThat(results.get(0).getCategory().getId()).isEqualTo(expenseDto.getCategoryId());
     }
 
     @Test(expected = InvalidExpenseException.class)
@@ -90,7 +102,7 @@ public class ExpensesServiceTest {
     }
 
     @Test
-    public void shouldDeleteExpense(){
+    public void shouldDeleteExpense() {
         //given
         ExpenseDto expenseDto = ExpensesData.createDummyExpenseDto();
         sut.add(expenseDto);

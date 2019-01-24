@@ -1,5 +1,6 @@
 package org.expensesplanner.expenses;
 
+import org.expensesplanner.category.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -7,11 +8,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class ExpensesMapper {
+
+    private CategoryRepository categoryRepository;
+
+    public ExpensesMapper(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
     public ExpenseEntity map(ExpenseDto dto) {
         ExpenseEntity entity = new ExpenseEntity();
         entity.setName(dto.getName());
         entity.setPrice(dto.getPrice());
-        entity.setCategory(dto.getCategory());
+        entity.setCategory(categoryRepository.findById(dto.getCategoryId()));
         entity.setPerson(dto.getPerson());
         entity.setDate(dto.getDate());
         return entity;
@@ -27,7 +35,7 @@ public class ExpensesMapper {
         dto.setPrice(entity.getPrice());
         dto.setPerson(entity.getPerson());
         dto.setDate(entity.getDate());
-        dto.setCategory(entity.getCategory());
+        dto.setCategoryId(entity.getCategory().getId());
         return dto;
 
     }

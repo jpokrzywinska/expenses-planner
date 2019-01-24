@@ -9,7 +9,7 @@ public class ExpensesData {
                 .id(1L)
                 .name("Pizza")
                 .price(40.50)
-                .category("Jedzenie")
+                .categoryId(1L)
                 .date(LocalDateTime.now())
                 .person("Justyna")
                 .build();
