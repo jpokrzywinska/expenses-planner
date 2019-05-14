@@ -7,6 +7,7 @@ import {AppComponent} from "./app.component";
 import { HomeComponent } from './component/home/home.component';
 import { TextInputComponent } from './component/common/text-input/text-input.component';
 import { ButtonComponent } from './component/common/button/button.component';
+import {HttpClientModule} from "@angular/common/http";
 
 const appRoutes: Routes = [
   {path: 'expenses', component: ExpensesComponent, pathMatch: 'full'},
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
       enableTracing: true,
       useHash: true
     }),
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

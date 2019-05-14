@@ -1,0 +1,11 @@
+.text-input {
+  display: flex;
+  margin: 5px;
+}
+
+.label {
+  width: 100px;
+}
+
+.text {
+}
